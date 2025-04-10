@@ -62,7 +62,7 @@ label_encoder = pickle.load(open('label_encoder.pkl', 'rb'))
 
 # loading of model neural network 
 # query_type_model = tf.keras.models.load_model('C:\\Users\\DELL\\small recommendation system\\neural_network_model_for_QueryType.h5')  # Load your query type model
-query_type_model = load_model("optimized_model.h5") 
+# query_type_model = load_model("optimized_model.h5") 
 # interpreter = tf.lite.Interpreter(model_path="model.tflite")
 # interpreter.allocate_tensors()
 def services_ranking(scores_list):
