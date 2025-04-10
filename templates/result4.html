@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('/static/ChatGPT Image Apr 2, 2025, 07_35_13 PM.png') no-repeat center center/cover;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar-resultpage {
+            background-color: #28a745;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .result-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            flex-grow: 1;
+        }
+
+        /* Service Cards */
+        .service-box {
+            background: rgb(255, 251, 251);
+            border-radius: 12px;
+            padding: 15px;
+            width: 300px;
+            height: 350px;
+            margin: 15px;
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .service-box:hover {
+            transform: scale(1.05);
+        }
+
+        .service-box img {
+            width: 250px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            padding-top: 23px;
+        }
+
+        .service-box h3 {
+            font-size: 18px;
+            color: white;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: rgb(11, 10, 10);
+            text-align: center;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 80px;
+        }
+
+        .btn:hover {
+            background: #218838;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .go-back-button {
+            position: absolute;
+            left: 20px;
+            border: none;
+            padding: 7px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .go-back-button:hover {
+            background: #218838;
+        }
+
+        /* AI-Based Insights */
+        .structured-response {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 20px;
+            width: 70%;
+            margin: 20px auto;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+            border-left: 5px solid #3498db; /* Blue border for AI responses */
+        }
+
+        .structured-response h2 {
+            font-size: 20px;
+            color: #2980b9;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .structured-response p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            padding: 15px;
+            background: rgba(240, 240, 240, 0.9);
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        /* Pricing & Government Schemes */
+        .pricing-data {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 20px;
+            width: 70%;
+            margin: 20px auto;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            animation: fadeIn 0.5s ease-in-out;
+            border-left: 5px solid #f39c12; /* Orange border for pricing */
+        }
+
+        .pricing-data h2 {
+            font-size: 20px;
+            color: #d35400;
+            border-bottom: 2px solid #e67e22;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .pricing-data p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.6;
+            padding: 15px;
+            background: rgba(240, 240, 240, 0.9);
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .pricing-data ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .pricing-data ul li {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .pricing-data strong {
+            color: #e67e22;
+            font-weight: bold;
+        }
+
+        .pricing-data .cost-estimation {
+            color: #d35400;
+            font-weight: bold;
+            background: rgba(255, 231, 181, 0.7);
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-resultpage">
+        <button class="go-back-button" onclick="goback()">Go Back</button>
+        Recommendation Services For Farmers
+    </div>
+    <div class="result-container">
+        {% if recommendations %}
+            {% for service in recommendations %}
+                <div class="service-box">
+                    <img src="{{ service_images[service] }}" alt="{{ service }}">
+                    <p class="display-service-name">{{ service }}</p>
+                    <p class="service-description">{{ services[service] }}</p>
+                    <button class="btn" onclick="viewDetails('{{ service }}')">View</button>
+                </div>
+            {% endfor %}
+        {% elif structured_response %}
+            <div class="structured-response">
+                <h2>AI-Based Insights</h2>
+                <p><strong>Query:</strong> {{ structured_response.structured_response.query }}</p>
+                <p><strong>AI Initial Response:</strong> {{ structured_response.structured_response.gemini_initial_response }}</p>
+                <p><strong>search_results:</strong> {{ structured_response.structured_response.search_results }}</p>
+                <p><strong>Suggested Action:</strong> {{ structured_response.structured_response.suggested_action }}</p>
+            </div>
+        
+            {% if pricing_data and 'schemes' in pricing_data %}
+            <div class="pricing-data">
+                <h2>Available Schemes</h2>
+                <ul>
+                    {% for scheme in pricing_data.schemes %}
+                        <li>
+                            <strong>{{ scheme.name }}</strong> <br>
+                            <em>{{ scheme.description }}</em> <br>
+                            <b>Eligibility:</b> {{ scheme.eligibility }} <br>
+                            <b>Financial Support:</b> {{ scheme.financial_support }} <br>
+                        </li>
+                        <hr>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    {% else %}
+        <p class="error">No recommendations found.</p>
+    {% endif %}
+    </div>
+    
+   
+<script>
+    function goback() {
+        window.location.href = "./";
+    }
+    function viewDetails(service) {
+        window.location.href = "/services/" + service.replace(/\s+/g, '_');
+    }
+</script>
+</body>
+</html>

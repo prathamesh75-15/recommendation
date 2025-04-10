@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Results</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="navbar">
+        Farmer Service Recommendation Results
+    </div>
+
+    <div class="result-container">
+        {% if recommendations %}
+            <h2>Recommended Services</h2>
+            <ul>
+                {% for service in recommendations %}
+                    <li><strong>{{ service }}</strong> - {{ services[service] }}</li>
+                {% endfor %}
+            </ul>
+        {% elif error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <button class="gobackbutton" onclick="location.href='/'">Go Back</button>
+    </div>
+</body>
+</html>
