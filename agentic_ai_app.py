@@ -20,8 +20,8 @@ from langchain_google_genai import GoogleGenerativeAI
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24) 
-genai.configure(api_key="AIzaSyCRw5CDXp7ad6U9Uwjac-sc_Xcd7gLNaso")
-llm = GoogleGenerativeAI(model="gemini-2.0-flash-lite", google_api_key="AIzaSyCRw5CDXp7ad6U9Uwjac-sc_Xcd7gLNaso")
+genai.configure(api_key="xxxxxxxxxxxxxxxx")
+llm = GoogleGenerativeAI(model="gemini-2.0-flash-lite", google_api_key="xxxxxxxxxxxxxxxxxx")
 
 service_images = {
     'Loan': '/static/loan.jpeg',
