@@ -140,19 +140,19 @@ def recommendation(farmer_issues):
 
 
 #function for query_type prediction 
-def predict_query_type(user_input):
+# def predict_query_type(user_input):
 
-    user_input_cleaned = user_input.lower().replace('[^\w\s]', '')
-    user_input_vectorized = vectorizer.transform([user_input_cleaned]).toarray()
-    # user_input_vectorized = tf.sparse.reorder(user_input_vectorized)
-    query_type = query_type_model.predict(user_input_vectorized)
-    predicted_index = np.argmax(query_type, axis=1)
+#     user_input_cleaned = user_input.lower().replace('[^\w\s]', '')
+#     user_input_vectorized = vectorizer.transform([user_input_cleaned]).toarray()
+#     # user_input_vectorized = tf.sparse.reorder(user_input_vectorized)
+#     query_type = query_type_model.predict(user_input_vectorized)
+#     predicted_index = np.argmax(query_type, axis=1)
 
-    # Decode the predicted index to get the query type
-    predicted_query_type = label_encoder.inverse_transform(predicted_index)
+#     # Decode the predicted index to get the query type
+#     predicted_query_type = label_encoder.inverse_transform(predicted_index)
 
-    print(predicted_query_type)
-    return predicted_query_type[0].strip()
+#     print(predicted_query_type)
+#     return predicted_query_type[0].strip()
     # input_details = interpreter.get_input_details()
     # output_details = interpreter.get_output_details()
     # query_cleaned = user_input.lower().replace('[^\w\s]', '')  # Normalize text
